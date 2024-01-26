@@ -1,23 +1,42 @@
 <script setup>
+import {defineProps} from "vue";
 
+defineProps({
+  name: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  pageCount: {
+    type: String,
+    required: true
+  },
+  download_url:{
+    type: String,
+    required: true
+  }
+});
 </script>
 
 <template>
   <div class="infoss">
-    <h1>三角年中总结计划汇报PPT模板</h1>
+    <h1>{{name}}</h1>
     <ul class="clear">
-      <li><i>分类：</i>工作总结PPT</li>
-      <li class="sh"><i>下载：</i><span id="countnum">234826</span>次</li>
+      <li><i>分类：</i>{{category}}</li>
+      <li class="sh"><i>下载：</i><span id="countnum">0</span>次</li>
       <li><i>比例：</i>宽屏16:9</li>
-      <li class="sh"><i>页数：</i>37页</li>
+      <li class="sh"><i>页数：</i>{{pageCount}}</li>
       <li><i>格式：</i>PPTX</li>
-      <li class="sh"><i>大小：</i>878KB</li>
+      <li class="sh"><i>大小：</i>未知</li>
       <li><i>软件：</i>PowerPoint</li>
       <li class="sh"><i>效果：</i>动态</li>
     </ul>
     <br>
     <br>
-    <div class="button"><a href="/p/d.php?aid=6250" rel="nofollow" class="down-button" target="_blank">点击下载</a>
+    <div class="button"><a :href="download_url" rel="nofollow" class="down-button" target="_blank">点击下载</a>
     </div>
   </div>
 </template>

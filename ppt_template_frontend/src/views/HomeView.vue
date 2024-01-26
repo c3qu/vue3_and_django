@@ -1,8 +1,9 @@
 <script setup xmlns="http://www.w3.org/1999/html">
 import CardComponent from "@/components/CardComponent.vue";
-import cardImageUrl from "@/assets/1-1PFZP0160-L.jpg"
 import SubNav from "@/components/SubNav.vue";
 import TitleAndDate from "@/components/TitleAndDate.vue";
+import {getPptTemplateInfo} from "@/api.js";
+import {ref} from "vue";
 
 const templateItems = [
   "总结汇报",
@@ -34,6 +35,53 @@ const diagramItems = [
   "包含"
 ]
 const justify = "center"
+const firstModuleInformation = ref([])
+getPptTemplateInfo({search: "模板"}).then((res) => {
+  firstModuleInformation.value = res.data.results
+})
+const secondModuleInformation = ref([])
+getPptTemplateInfo({search: "图"}).then((res) => {
+  console.log(res.data.results)
+  secondModuleInformation.value = res.data.results
+})
+const searchKeyword = ref("")
+
+const template_id_name_list_1 = [
+  {id: "2537", name: "时尚艺术黑色杂志风PPT模板"},
+  {id: "2554", name: "创意艺术不规则图文PPT模板"},
+  {id: "2563", name: "时尚质感艺术水彩PPT模板"},
+  {id: "2690", name: "创意精美墨迹艺术PPT模板"},
+  {id: "2940", name: "彩色艺术水彩涂鸦PP模板"},
+  {id: "2983", name: "简洁艺术粉色女生PPT模板"},
+  {id: "2995", name: "高端精美质感艺术鎏金PPT模板"},
+  {id: "3042", name: "艺术插画风可爱卡通PPT模板"},
+  {id: "3086", name: "创意彩色艺术炫酷PPT模板"},
+  {id: "3114", name: "莫兰迪彩色艺术涂鸦PPT模板"},
+  {id: "3123", name: "简洁抽象艺术曲线通用PPT模板"},
+  {id: "3125", name: "炫彩艺术撞色涂鸦风PPT模板"},
+  {id: "3181", name: "水彩墨迹艺术设计PPT模板"},
+  {id: "3189", name: "创意艺术极简设计PPT模板"},
+]
+
+const template_id_name_list_2 = [
+  {id: 3500, name: "区块链技术及发展前景PPT模板"},
+  {id: 3548, name: "云服务云技术云计算PPT模板"},
+  {id: 3700, name: "立方体科技风网络技术项目介绍PPT模板"},
+  {id: 3996, name: "医疗保健康复护理新技术PPT模板"},
+  {id: 4008, name: "区块链技术与应用PPT模板"},
+  {id: 4084, name: "5G 网络技术介绍及前景展望PPT模板"},
+  {id: 4085, name: "科技感区块链技术介绍PPT模板"}
+]
+const template_id_name_list_3 = [
+  {"id": 2553, "name": "卡通可爱读书分享会PPT模板"},
+  {"id": 2556, "name": "创意可爱MBE风格PPT模板"},
+  {"id": 2618, "name": "简约可爱藤蔓多肉植物PPT模板"},
+  {"id": 2620, "name": "卡通可爱小动物PPT模板"},
+  {"id": 2651, "name": "可爱欢乐卡通儿童PPT模板"},
+  {"id": 2662, "name": "卡通可爱面包超人PPT模板"},
+  {"id": 2716, "name": "可爱机器猫哆啦A梦PPT模板"},
+]
+
 </script>
 
 <template>
@@ -42,10 +90,9 @@ const justify = "center"
       <div class="wrapper">
         <p style="color:#eee;font-size:28px;font-weight:100;margin:30px 0 0 332px">一个有情怀的免费PPT模板下载网站！</p>
         <div class="searchbg">
-          <form action="/p/search.php" name="formsearch">
-            <input type="hidden" name="kwtype" value="1">
-            <input name="q" type="text" class="search-keyword" id="search-keyword" value="请输入关键词"
-                   onfocus="if (value =='请输入关键词'){value =''}" onblur="if (value ==''){value='请输入关键词'}">
+          <form @submit.prevent="$router.push({path:'/template',query: {search_keyword:searchKeyword}})">
+            <input type="text" class="search-keyword" id="search-keyword" placeholder="请输入关键词"
+                   v-model="searchKeyword"/>
             <button type="submit"></button>
           </form>
         </div>
@@ -54,8 +101,8 @@ const justify = "center"
     <div style="background:#fff;text-align: center;padding: 15px 0 13px 0;border-bottom: 1px #eee solid;">
       <div class="wrapper">
         <div>
-          <a href="http://www.51miz.com/ppt/?utm_term=1241383&amp;utm_source=webad" target="_blank" rel="nofollow"><img
-              src="../assets/1048.png">
+          <a href="" rel="nofollow">
+            <img src="../assets/1048.png" alt=""/>
           </a>
         </div>
       </div>
@@ -67,47 +114,62 @@ const justify = "center"
         <SubNav :items="templateItems" title="PPT模板"/>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;align-content: flex-start;">
           <CardComponent
-              v-for="_ in 10"
-              views="1234"
-              add-time="2024-01-10"
-              name="小清新MBE风模板"
-              :image-src="cardImageUrl"
-              url="https://baidu.com"
+              v-for="item in firstModuleInformation"
+              :key="item.id"
+              :views="0"
+              :page-count="item.page_count"
+              :name="item.template_name"
+              :image-src="item.cover_img_url"
+              @click="$router.push({path:'/detail',query: {id:item.id}})"
           />
         </div>
         <SubNav :items="diagramItems" title="PPT图表"/>
         <div style="display: flex;flex-direction: row;flex-wrap: wrap;align-content: flex-start;">
           <CardComponent
-              v-for="_ in 10"
-              views="1234"
-              add-time="2024-01-10"
-              name="小清新MBE风模板"
-              :image-src="cardImageUrl"
-              url="https://baidu.com"
+              v-for="item in secondModuleInformation"
+              :key="item.id"
+              :views="0"
+              :page-count="item.page_count"
+              :name="item.template_name"
+              :image-src="item.cover_img_url"
+              @click="$router.push({path:'/detail',query: {id:item.id}})"
           />
         </div>
         <div style="display: flex;flex-direction: row;">
           <div style="flex: 2">
-            <SubNav :items="['PPT目录模板','人物剪影素材','PPT小图标']" title="PPT素材"/>
-            <div style="display: flex;flex-direction: row">
-              <div style="display: flex;flex-direction: column">
-                <TitleAndDate v-for="_ in 7" title="测试测试测试" date="2024-01-11" url="https://baidu.com"/>
-              </div>
-              <div style="display: flex;flex-direction: column">
-                <TitleAndDate v-for="_ in 7" title="测试测试测试" date="2024-01-11" url="https://baidu.com"/>
-              </div>
+            <SubNav :items="['简洁','创意','质感']" title="艺术类"/>
+            <div style="display: flex;flex-direction: row;flex-wrap: wrap;align-content: flex-start;">
+              <TitleAndDate
+                  v-for="item in template_id_name_list_1"
+                  :title="item.name"
+                  date=""
+                  url="#"
+                  @click="$router.push({path:'/detail',query: {id:item.id}})"
+              />
             </div>
           </div>
           <div style="flex: 1">
-            <SubNav :items="[]" title="PPT素材"/>
+            <SubNav :items="[]" title="技术类"/>
             <div style="display: flex;flex-direction: column">
-              <TitleAndDate v-for="_ in 7" title="测试测试测试" date="2024-01-11" url="https://baidu.com"/>
+              <TitleAndDate
+                  v-for="item in template_id_name_list_2"
+                  :title="item.name"
+                  date=""
+                  url="#"
+                  @click="$router.push({path:'/detail',query: {id:item.id}})"
+              />
             </div>
           </div>
           <div style="flex: 1">
-            <SubNav :items="['毛笔','手写','可爱']" title="字体下载"/>
+            <SubNav :items="['小黄人','女生','动物']" title="可爱分类"/>
             <div style="display: flex;flex-direction: column">
-              <TitleAndDate v-for="_ in 7" title="测试测试测试" date="2024-01-11" url="https://baidu.com"/>
+              <TitleAndDate
+                  v-for="item in template_id_name_list_3"
+                  :title="item.name"
+                  date=""
+                  url="#"
+                  @click="$router.push({path:'/detail',query: {id:item.id}})"
+              />
             </div>
           </div>
         </div>

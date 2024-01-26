@@ -14,7 +14,7 @@
     <el-menu-item index="/template">PPT模板</el-menu-item>
     <el-menu-item index="/background">PPT背景</el-menu-item>
     <el-menu-item index="/diagrams">PPT图表</el-menu-item>
-    <el-menu-item index="/detail">详情页</el-menu-item>
+<!--    <el-menu-item index="/detail">详情页</el-menu-item>-->
   </el-menu>
   <RouterView class="router-view"/>
   <div class="foot-bar">
@@ -31,9 +31,9 @@
       </div>
     </div>
     <div class="foot-bar-2-col">
-      <h3>优品PPT</h3>
+      <h3>bcsPPT</h3>
       <div>
-        优品PPT模板网（www.ypppt.com）是一家专注于分享高质量的免费PPT模板下载网站。包括PPT图表、PPT背景图片、PPT素材、PPT教程等各类PPT资源。致力于打造国内最大最权威的PPT下载一站式服务平台。
+        本站是一家专注于分享高质量的免费PPT模板下载网站。包括PPT图表、PPT背景图片、PPT素材、PPT教程等各类PPT资源。致力于打造国内最大最权威的PPT下载一站式服务平台。
       </div>
     </div>
     <div class="foot-bar-3-col">

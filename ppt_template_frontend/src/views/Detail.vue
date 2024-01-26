@@ -1,27 +1,32 @@
 <script setup>
-const urlList = [
-  "/assets/cover_img/1-211101194326.jpg",
-  "/assets/cover_img/1-211101194326-51.jpg",
-  "/assets/cover_img/1-211101194326.jpg",
-  "/assets/cover_img/1-211101194327-50.jpg",
-  "/assets/cover_img/1-211101194327-51.jpg",
-  "/assets/cover_img/1-211101194327-52.jpg",
-  "/assets/cover_img/1-211101194327-53.jpg",
-  "/assets/cover_img/1-211101194327-54.jpg",
-  "/assets/cover_img/1-211101194327.jpg",
-  "/assets/cover_img/1-211101194328-50.jpg",
-  "/assets/cover_img/1-211101194328.jpg"
-]
+
 import PictureSwitcher from "@/components/PictureSwitcher.vue";
 import PptInfo from "@/components/PptInfo.vue";
+import {useRoute} from "vue-router"
+import {getPptTemplateInfoById} from "@/api.js";
+import {ref} from "vue";
+
+const route = useRoute();
+const pptId = route.query.id
+const pptInfo = ref({})
+getPptTemplateInfoById(pptId).then((res) => {
+  pptInfo.value = res.data
+})
+
 </script>
 
 <template>
   <br>
   <div class="ppt-class-and-info">
 
-    <PictureSwitcher :url-list="urlList"/>
-    <PptInfo class="ppt-info"/>
+    <PictureSwitcher :url-list="[pptInfo.cover_img_url]"/>
+    <PptInfo
+        class="ppt-info"
+        :download_url="pptInfo.download_url"
+        :page-count="pptInfo.page_count"
+        :category="pptInfo.category"
+        :name="pptInfo.template_name"
+    />
 
   </div>
 </template>

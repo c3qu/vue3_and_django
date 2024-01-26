@@ -19,7 +19,7 @@ defineProps({
 
 <template>
   <div>
-    <a :href="url" target="_blank">
+    <a :href="url">
       {{title}}
     </a>
     <span>{{date}}</span>

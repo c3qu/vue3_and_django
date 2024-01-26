@@ -1,28 +1,30 @@
 <script setup>
 
-import CurrentLocation from "@/components/CurrentLocation.vue";
 import WordTag from "@/components/WordTag.vue";
 import CategoryName from "@/components/CategoryName.vue";
 import ColorBar from "@/components/ColorBar.vue";
-import TotalNum from "@/components/TotalNum.vue";
-import cardImageUrl from "@/assets/1-1PFZP0160-L.jpg";
 import CardComponent from "@/components/CardComponent.vue";
 import PageToolBar from "@/components/PageToolBar.vue";
+import {getPptTemplateInfo} from "@/api.js";
+import {ref, watch} from "vue";
 
-const locationList = [
-  {
-    name: "优品PPT",
-    url: "https://baidu.com"
-  },
-  {
-    name: "PPT模板",
-    url: "https://baidu.com"
-  },
-  {
-    name: "社会生活",
-    url: "https://baidu.com"
-  }
-]
+import {currentPageStore} from "@/stores/counter.js";
+import {useRoute} from "vue-router";
+
+// const locationList = [
+//   {
+//     name: "优品PPT",
+//     url: "https://baidu.com"
+//   },
+//   {
+//     name: "PPT模板",
+//     url: "https://baidu.com"
+//   },
+//   {
+//     name: "社会生活",
+//     url: "https://baidu.com"
+//   }
+// ]
 const colorItemList = [
   {
     desc: "颜色",
@@ -75,13 +77,43 @@ const categoryNameList = [
 ]
 
 // 最大20
-const pptList = Array.from({length: 20}, (_, index) => index)
+const pptTemplateInfoList = ref([])
+const pageSize = ref(20)
+
+const route = useRoute();
+let searchKeyword = route.query.search_keyword
+if (searchKeyword === undefined) {
+  searchKeyword = "模板"
+}
+
+const doRequest = (pageIndex) => {
+  getPptTemplateInfo({
+    search: searchKeyword,
+    page: pageIndex,
+    page_size: pageSize.value
+  }).then((res) => {
+    pptTemplateInfoList.value = res.data.results
+    if (pageIndex === 1) {
+      currentPageStore().init(Math.ceil(res.data.count / pageSize.value))
+    }
+  })
+}
+doRequest(1)
+
+const store = currentPageStore()
+// 监听 state 的变化
+watch(store, (state) => {
+  doRequest(state.getCurrentPage)
+})
+
 </script>
 
 <template>
   <div class="body">
     <div class="content">
-      <CurrentLocation :location-list="locationList"/>
+      <br>
+
+      <div v-if="searchKeyword==='模板'">
       <div style="display: flex;flex-direction: row">
         <WordTag word="热门分类"/>
         <CategoryName url="https://baidu.com" category-name="开题报告" class="category-name"/>
@@ -104,27 +136,26 @@ const pptList = Array.from({length: 20}, (_, index) => index)
             class="category-name"
         />
       </div>
-
+      </div>
+      <h1 v-else class="search-keyword">
+        搜索关键字:{{searchKeyword}}
+      </h1>
       <div style="display: flex;flex-direction: row;flex-wrap: wrap;align-content: flex-start;">
         <CardComponent
-            v-for="_ in 10"
-            views="1234"
-            add-time="2024-01-10"
-            name="小清新MBE风模板"
-            :image-src="cardImageUrl"
-            url="https://baidu.com"
+            v-for="item in pptTemplateInfoList"
+            :key="item.id"
+            :views="0"
+            :page-count="item.page_count"
+            :name="item.template_name"
+            :image-src="item.cover_img_url"
+            @click="$router.push({path:'/detail',query: {id:item.id}})"
         />
       </div>
       <br>
-        <PageToolBar :page-count="50" :current-page="50"/>
-
+      <PageToolBar/>
     </div>
-
   </div>
-
   <br><br><br>
-
-
 </template>
 
 <style scoped>
@@ -140,7 +171,8 @@ const pptList = Array.from({length: 20}, (_, index) => index)
   display: flex;
   flex-direction: column;
 }
-.category-name{
+
+.category-name {
   margin-right: 10px;
 }
 </style>

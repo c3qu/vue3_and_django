@@ -1,26 +1,25 @@
 <template>
   <div class="card">
-    <a :href="url">
-    <div class="card-image">
-      <img :src="imageSrc" alt="Card Image" />
-    </div>
-    </a>
+      <div class="card-image">
+        <img :src="imageSrc" alt="Card Image"/>
+      </div>
     <div class="card-body">
-      <a :href="url">
       <div class="card-title">{{ name }}</div>
-      </a>
       <div class="card-info">
-        <div>{{ addTime }}</div>
-        <div><span class="right"></span>{{ views }}</div>
+        <div>{{ pageCount }}</div>
+        <div>
+          <span class="right">
+          </span>
+          {{ views }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
-
-const props = defineProps({
+import {defineProps} from 'vue'
+defineProps({
   imageSrc: {
     type: String,
     required: true
@@ -29,51 +28,50 @@ const props = defineProps({
     type: String,
     required: true
   },
-  addTime: {
+  pageCount: {
     type: String,
     required: true
   },
   views: {
     type: Number,
     required: true
-  },
-  url: {
-    type: String,
-    required: true
   }
-})
+});
 </script>
 
 <style scoped>
-.right{
+.right {
   background: url(../assets/icon-sprite.png) no-repeat -1px -42px;
   padding-left: 21px;
   font-size: 12px;
 }
+
 .card {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   overflow: hidden;
   width: 260px;
 }
+
 .card-image img {
   width: 100%;
   height: auto;
   display: block;
 }
+
 .card-body {
   padding: 10px;
 }
+
 .card-title {
   margin: 0 0 10px;
-  font-size: 0.1em;
+  font-size: 1em;
   color: #757575;
 }
+
 .card-info {
   display: flex;
   justify-content: space-between;
-  //padding: 8px 0;
-  font-size: 0.5em;
-  color: #999999;
+//padding: 8px 0; font-size: 0.5em; color: #999999;
 }
 </style>
