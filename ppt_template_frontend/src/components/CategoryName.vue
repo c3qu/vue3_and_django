@@ -13,7 +13,12 @@ defineProps({
 </script>
 
 <template>
-<a :href="url">{{categoryName}}</a>
+<a
+    :href="url"
+    @click="$router.push({path:'/template',query: {search_keyword:categoryName}})"
+>
+  {{categoryName}}
+</a>
 </template>
 
 <style scoped>

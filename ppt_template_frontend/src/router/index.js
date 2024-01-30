@@ -15,6 +15,16 @@ const router = createRouter({
             component: () => import('../views/PptTemplate.vue')
         },
         {
+            path: '/background',
+            name: 'background',
+            component: () => import('../views/PptBackground.vue')
+        },
+        {
+            path: '/diagrams',
+            name: 'diagrams',
+            component: () => import('../views/PptDiagrams.vue')
+        },
+        {
             path: '/detail',
             name: 'detail',
             component: () => import('../views/Detail.vue')

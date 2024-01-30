@@ -34,14 +34,12 @@ const diagramItems = [
   "构架",
   "包含"
 ]
-const justify = "center"
 const firstModuleInformation = ref([])
 getPptTemplateInfo({search: "模板"}).then((res) => {
   firstModuleInformation.value = res.data.results
 })
 const secondModuleInformation = ref([])
 getPptTemplateInfo({search: "图"}).then((res) => {
-  console.log(res.data.results)
   secondModuleInformation.value = res.data.results
 })
 const searchKeyword = ref("")

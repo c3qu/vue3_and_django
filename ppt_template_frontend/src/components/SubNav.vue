@@ -3,16 +3,22 @@
     <h3 class="title">{{ title }}</h3>
     <ul class="horizontal-list">
       <li v-for="item in items" :key="item">
-        <a href="https://baidu.com">{{ item }}</a>
+        <a href="javascript:void(0);"
+           @click="$router.push({path:'/template',query: {search_keyword:item}})"
+        >
+          {{ item }}
+        </a>
       </li>
-      <li class="more"> <a href="https://baidu.com">更多</a></li>
+      <li class="more">
+        <a href="javascript:void(0);" @click="$router.push({path:'/template',query: {search_keyword:title}})">更多</a>
+      </li>
     </ul>
 
   </div>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import {defineProps} from 'vue'
 
 const props = defineProps({
   title: {
@@ -20,7 +26,7 @@ const props = defineProps({
     required: true
   },
   items: {
-    type:Array,
+    type: Array,
     required: true
   }
 })
@@ -29,13 +35,13 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.title-and-list{
+.title-and-list {
   display: flex;
   flex-direction: row;
-//justify-content: center;
-  align-items: center;
+//justify-content: center; align-items: center;
 }
-.title{
+
+.title {
   border-left: 10px solid #0099e5;
   margin-right: 10px;
   padding-left: 5px;
@@ -46,22 +52,22 @@ const props = defineProps({
   display: flex;
   list-style: none;
   padding: 0;
-  //width: 1000px;
-  flex: 1;
+//width: 1000px; flex: 1;
 }
 
-a{
+a {
   text-decoration: none;
   color: #444;
 }
 
-a:hover{
+a:hover {
   text-decoration: underline;
 }
 
-.more{
+.more {
   margin-left: auto;
 }
+
 .horizontal-list li {
   margin-right: 10px;
 }

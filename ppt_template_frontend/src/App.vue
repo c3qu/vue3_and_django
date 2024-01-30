@@ -16,7 +16,8 @@
     <el-menu-item index="/diagrams">PPT图表</el-menu-item>
 <!--    <el-menu-item index="/detail">详情页</el-menu-item>-->
   </el-menu>
-  <RouterView class="router-view"/>
+
+  <RouterView/>
   <div class="foot-bar">
     <div class="foot-bar-1-col">
       <div class="words-box">
@@ -48,7 +49,7 @@ import {ref} from 'vue'
 
 const activeIndex = ref('1')
 const handleSelect = (key, keyPath) => {
-  console.log(key, keyPath)
+
 }
 const toTop = () => {
   window.scrollTo(0, 0)
@@ -109,9 +110,5 @@ i {
 .el-menu {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border:0;
-}
-
-.router-view {
-  margin-top: 0;
 }
 </style>
