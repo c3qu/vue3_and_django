@@ -139,7 +139,7 @@ watch(() => route.query.search_keyword, (value, oldValue, onCleanup) => {
             :key="item.id"
             :views="0"
             :page-count="item.page_count"
-            :name="item.template_name"
+            :name="item.name"
             :image-src="item.cover_img_url"
             @click="$router.push({path:'/detail',query: {id:item.id}})"
         />

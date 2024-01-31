@@ -19,13 +19,13 @@ getPptTemplateInfoById(pptId).then((res) => {
   <br>
   <div class="ppt-class-and-info">
 
-    <PictureSwitcher :url-list="[pptInfo.cover_img_url]"/>
+    <PictureSwitcher :url-list="pptInfo.cover_img_url.split(',')"/>
     <PptInfo
         class="ppt-info"
         :download_url="pptInfo.download_url"
         :page-count="pptInfo.page_count"
         :category="pptInfo.category"
-        :name="pptInfo.template_name"
+        :name="pptInfo.name"
     />
 
   </div>

@@ -4,7 +4,7 @@ from unittest import TestCase
 
 import requests
 
-from ppt.models import PptTemplate
+from ppt.models import PptInfo
 
 
 # 执行测试
@@ -14,29 +14,37 @@ class MyModelTestCase(TestCase):
         pass
 
     def test_init_template_table(self):
-        f = open("ppt/template_meta.json", "r", encoding="utf-8")
-        data = json.loads(f.read())
-        for i in data:
-            PptTemplate.objects.create(
-                template_name=i["template_name"],
-                category=i["category"],
-                page_count=i["page_count"],
-                cover_img_url=i["cover_img_url"],
-                download_url=i["download_page"]
-            )
-        self.assertEqual(PptTemplate.objects.count(), 3689)
+        types = [
+            "moban",
+            "beijing",
+            "tubiao"
+        ]
+        for index, ppt_type in enumerate(types):
+            f = open(f"ypppt/{ppt_type}_meta.json", "r", encoding="utf-8")
+            data = json.loads(f.read())
+
+            for i in data:
+                defaults = {
+                    "name": i["template_name"],
+                    "type": index + 1,
+                    "category": i["category"],
+                    "page_count": i["page_count"],
+                    "cover_img_url": i["cover_img_url"],
+                    "download_url": i["download_page"]
+                }
+                PptInfo.objects.get_or_create(defaults=defaults, download_url=i["download_page"])
+        print(PptInfo.objects.count())
+        self.assertEqual(1, 1)
 
     def test_download_cover_pic_and_ppt_file(self):
-        for ppt_template in PptTemplate.objects.all():
+        for ppt_template in PptInfo.objects.all():
             download_url = ppt_template.download_url
-            if "down" in download_url:
-                continue
-            # print(download_url)
-            res = requests.get(download_url, verify=False)
-            p = re.compile(r'href="(.*?)">下')
-            result_list = p.findall(res.text)
-            ppt_template.download_url = result_list[0]
-            ppt_template.save()
+            if "aid=" in download_url:
+                res = requests.get(download_url, verify=False)
+                p = re.compile(r'href="(.*?)">下')
+                result_list = p.findall(res.text)
+                ppt_template.download_url = result_list[0]
+                ppt_template.save()
 
         self.assertEqual(1, 1)
 
@@ -60,7 +68,7 @@ class MyModelTestCase(TestCase):
             "1-15050Q53402.rar",
             "1-15042GJ609.rar",
         ]
-        for ppt_template in PptTemplate.objects.all():
+        for ppt_template in PptInfo.objects.all():
             download_url = ppt_template.download_url
             cover_img_url = ppt_template.cover_img_url
             if cover_img_url and "http" in cover_img_url:

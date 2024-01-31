@@ -110,5 +110,6 @@ i {
 .el-menu {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border:0;
+  user-select: none;
 }
 </style>

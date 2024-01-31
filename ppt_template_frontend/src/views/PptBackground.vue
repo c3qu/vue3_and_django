@@ -58,9 +58,9 @@ const pictureCategories = [
 ]
 const pptTemplateInfoList = ref([])
 const pageSize = ref(20)
-const doRequest = (pageIndex, keyword) => {
+const doRequest = (pageIndex, type) => {
   getPptTemplateInfo({
-    search: keyword,
+    type: type,
     page: pageIndex,
     page_size: pageSize.value
   }).then((res) => {
@@ -72,9 +72,9 @@ const doRequest = (pageIndex, keyword) => {
 }
 
 watch(currentPageStore(), (state) => {
-  doRequest(state.getCurrentPage, "背景")
+  doRequest(state.getCurrentPage, 2)
 })
-doRequest(currentPageStore().getCurrentPage, "背景")
+doRequest(currentPageStore().getCurrentPage, 2)
 </script>
 
 <template>
@@ -115,7 +115,7 @@ doRequest(currentPageStore().getCurrentPage, "背景")
             :key="item.id"
             :views="0"
             :page-count="item.page_count"
-            :name="item.template_name"
+            :name="item.name"
             :image-src="item.cover_img_url"
             @click="$router.push({path:'/detail',query: {id:item.id}})"
         />

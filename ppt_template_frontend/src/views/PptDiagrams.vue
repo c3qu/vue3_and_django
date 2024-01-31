@@ -42,9 +42,9 @@ const specializedCharts = [
 
 const pptTemplateInfoList = ref([])
 const pageSize = ref(20)
-const doRequest = (pageIndex, keyword) => {
+const doRequest = (pageIndex, type) => {
   getPptTemplateInfo({
-    search: keyword,
+    type: type,
     page: pageIndex,
     page_size: pageSize.value
   }).then((res) => {
@@ -54,11 +54,11 @@ const doRequest = (pageIndex, keyword) => {
     }
   })
 }
-const keyword = '图'
+
 watch(currentPageStore(), (state) => {
-  doRequest(state.getCurrentPage, keyword)
+  doRequest(state.getCurrentPage, 3)
 })
-doRequest(currentPageStore().getCurrentPage, keyword)
+doRequest(currentPageStore().getCurrentPage, 3)
 </script>
 
 <template>
@@ -91,7 +91,7 @@ doRequest(currentPageStore().getCurrentPage, keyword)
             :key="item.id"
             :views="0"
             :page-count="item.page_count"
-            :name="item.template_name"
+            :name="item.name"
             :image-src="item.cover_img_url"
             @click="$router.push({path:'/detail',query: {id:item.id}})"
         />

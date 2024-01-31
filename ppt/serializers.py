@@ -1,9 +1,9 @@
 from rest_framework.serializers import ModelSerializer
 
-from ppt.models import PptTemplate
+from ppt.models import PptInfo
 
 
-class PptTemplateSerializer(ModelSerializer):
+class PptInfoSerializer(ModelSerializer):
     class Meta:
-        model = PptTemplate
+        model = PptInfo
         fields = "__all__"

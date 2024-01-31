@@ -10,7 +10,8 @@
         </a>
       </li>
       <li class="more">
-        <a href="javascript:void(0);" @click="$router.push({path:'/template',query: {search_keyword:title}})">更多</a>
+        <a href="javascript:void(0);"
+           @click="$router.push({path:'/template',query: {search_keyword:title.replace('分类','').replace('类','')}})">更多</a>
       </li>
     </ul>
 

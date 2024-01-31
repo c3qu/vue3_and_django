@@ -29,6 +29,12 @@ const setCurrentPicIndex = (index) => {
   currentPicIndex.value = index
 }
 
+const workoutSrc = (src_list) => {
+  const first_src = src_list.split(',')[0]
+  // console.log(local_img_src + "," + first_src)
+  return "/assets/cover_img/" + first_src.split("/").slice(-1)[0]
+}
+
 </script>
 
 <template>
@@ -36,7 +42,10 @@ const setCurrentPicIndex = (index) => {
     <div id="play">
       <ul class="img_ul">
         <li v-for="(url,index) in urlList " :style="currentPicIndex===index?'display:list-item':'display:none'">
-          <img :src="url" width="668" alt=""/>
+          <img
+              :src="workoutSrc(url)" width="668" alt=""
+              @error="e=>e.target.src=url.split(',')[0]"
+          />
         </li>
       </ul>
       <a href="javascript:void(0)" @click="preOrNextPicture(0)" class="prev_a change_a" title="上一张"></a>
@@ -49,7 +58,10 @@ const setCurrentPicIndex = (index) => {
             :class="currentPicIndex===index?'on':''"
             @click="setCurrentPicIndex(index)"
         >
-          <img :src="url" alt=""/>
+          <img
+              :src="workoutSrc(url)" alt=""
+              @error="e=>e.target.src=url.split(',')[0]"
+          />
         </li>
       </ul>
     </div>
@@ -97,7 +109,7 @@ const setCurrentPicIndex = (index) => {
   margin: 0;
 }
 
-.img_ul{
+.img_ul {
   margin: 0;
 }
 
