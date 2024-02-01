@@ -69,6 +69,9 @@ const workoutSrc = (src_list) => {
 </template>
 
 <style scoped>
+.article {
+  user-select: none;
+}
 
 #play {
   position: relative;

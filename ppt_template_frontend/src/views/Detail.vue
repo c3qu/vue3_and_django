@@ -13,6 +13,9 @@ getPptTemplateInfoById(pptId).then((res) => {
   pptInfo.value = res.data
 })
 
+const workoutDownloadUrl = (url) => {
+  return "/assets/ppt_file/" + url.split("/").slice(-1)
+}
 </script>
 
 <template>
@@ -22,7 +25,7 @@ getPptTemplateInfoById(pptId).then((res) => {
     <PictureSwitcher :url-list="pptInfo.cover_img_url.split(',')"/>
     <PptInfo
         class="ppt-info"
-        :download_url="pptInfo.download_url"
+        :download_url="workoutDownloadUrl(pptInfo.download_url)"
         :page-count="pptInfo.page_count"
         :category="pptInfo.category"
         :name="pptInfo.name"

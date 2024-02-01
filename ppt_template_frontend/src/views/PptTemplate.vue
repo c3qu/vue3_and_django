@@ -160,6 +160,7 @@ watch(() => route.query.search_keyword, (value, oldValue, onCleanup) => {
 }
 
 .content {
+  user-select: none;
   width: 1310px;
   display: flex;
   flex-direction: column;
